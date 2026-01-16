@@ -22,7 +22,7 @@ if not paths_set:
     exit(1)
 
 
-cca = None
+cca = "Remy" # This is the internal name for rplus
 int_type_list = []
 gen_list = None
 load = False
