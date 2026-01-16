@@ -7,13 +7,14 @@ from commonanalysis import *
 
 #TODO: Be more efficient about only running through the results once
 
-# NOTE: Set these paths for your environment!
+# NOTE: Set these paths for your environment! (then set paths_set to True)
+# Strongly recommend you use absolute paths (could not get references to home (~) to work)
 paths_set = False
 
 ns_path = "/path/to/ns-3.36"
 script = "single-link-v2"
 results_dir = "/path/to/output/dir/" 
-base_rplusoutput_path = "/path/to/rplus/results/{}/{}/"
+base_rplusoutput_path = "/path/to/rplus/results/{}/{}/" # First spot is filled with provided rplus dir name (-w) and second is with the int type (eg, link)
 netconfig_path = "/path/to/netconfig/dir"
 
 if not paths_set:
@@ -105,43 +106,10 @@ whisker_type_dirs = []
 int_enabled_values = {"queue": True, "link": True, "int": True, "no-int": False, "ds": False, 
                       "sr": False, "dsrb": False, "dr": False, "srint": True, "srintl": True, "srintq": True,
                       "loss": False, "losslink": True, "lossqueue": True, "lossint": True, "lossdelay": False}
+
+int_type_to_dir_map = {"intq": "queue", "intl": "link", "noint": "no-int"} # Some dirs are named slightly differently than the input here
 for int_type in int_type_list:
-    whisker_type_dir=""
-    if int_type == "intq":
-        whisker_type_dir = "queue"
-    elif int_type == "intl":
-        whisker_type_dir = "link"
-    elif int_type == "int":
-        whisker_type_dir = "int"
-    elif int_type == "noint":
-        whisker_type_dir = "no-int"
-    elif int_type == "ds":
-        whisker_type_dir = "ds"
-    elif int_type == "sr":
-        whisker_type_dir = "sr"
-    elif int_type == "dsrb":
-        whisker_type_dir = "dsrb"
-    elif int_type == "dr":
-        whisker_type_dir = "dr"
-    elif int_type == "srint":
-        whisker_type_dir = "srint"
-    elif int_type == "srintl":
-        whisker_type_dir = "srintl"
-    elif int_type == "srintq":
-        whisker_type_dir = "srintq"
-    elif int_type == "loss":
-        whisker_type_dir = "loss"
-    elif int_type == "losslink":
-        whisker_type_dir = "losslink"
-    elif int_type == "lossqueue":
-        whisker_type_dir = "lossqueue"
-    elif int_type == "lossint":
-        whisker_type_dir = "lossint"
-    elif int_type == "lossdelay":
-        whisker_type_dir = "lossdelay"
-    else:
-        print("Non-valid int type provided")
-        exit(1)
+    whisker_type_dir=int_type_to_dir_map.get(int_type, default=int_type)
 
     whisker_type_dirs.append(whisker_type_dir)
 
@@ -154,8 +122,6 @@ print(campaign)
 
 runs = 200
 subruns = 10
-run_int_seeds = list(range(0, runs))
-run_string_seeds = [str(x * (1734985 + x)) for x in run_int_seeds]
 
 whisker_file_name = "{}.{}"
 final_result_file_format = results_dir + "results-{}{}-g{}.csv"
