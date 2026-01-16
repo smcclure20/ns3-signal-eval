@@ -1,5 +1,8 @@
 set(PROTOFLAGS "-lprotobuf -pthread -lpthread")
 
+find_package(Protobuf REQUIRED)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS remy/dna.proto)
+
 set(source_files
     helper/internet-stack-helper.cc
     helper/internet-trace-helper.cc
