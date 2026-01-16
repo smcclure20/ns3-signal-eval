@@ -109,7 +109,7 @@ int_enabled_values = {"queue": True, "link": True, "int": True, "no-int": False,
 
 int_type_to_dir_map = {"intq": "queue", "intl": "link", "noint": "no-int"} # Some dirs are named slightly differently than the input here
 for int_type in int_type_list:
-    whisker_type_dir=int_type_to_dir_map.get(int_type, default=int_type)
+    whisker_type_dir=int_type_to_dir_map.get(int_type, int_type)
 
     whisker_type_dirs.append(whisker_type_dir)
 
