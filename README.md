@@ -29,7 +29,7 @@ To run many simulations in parallel with different parameters, you can use the [
 
 As an example, you may run `rplus-campaign-mg-mt.py` as follows:
 
-`python3 rplus-campaign-mg-mt.py -c remy -t "int,intq,intl,noint" -g "0,1,2,3,4" -w cfg-default-results-dir -cf config-default.cfg -s optional-suffix-to-result-filenames` 
+`python3 rplus-campaign-mg-mt.py -t "int,intq,intl,noint" -g "0,1,2,3,4" -w cfg-default-results-dir -cf config-default.cfg -s optional-suffix-to-result-filenames` 
 
 This will run 200 simulations of the R+ outputs in the directory with the name with the name `cfg-default-results-dir ` for each selected generation (0-4) and each signal set listed with the network config `config-default.cfg` (each signal set is expected to have its own named subdirectory). 
 
@@ -59,7 +59,7 @@ Here, we note the main modifications over baseline ns3 for easier changes to our
 - `src/network/model/int-packet-tag.cc` adds a tag that hosts can use to record INT metadata of a packet even after the INT header is stripped
 - `src/point-to-point/model/int-header.cc` implements the INT header
 - `src/point-to-point-net-device/model/point-to-point-net-device.cc` contains the code for how a node (switch) can read and update the INT header of a packet
-- `scratch` contains the top-level simulator script as well as some additional utils
+- `scratch` contains the top-level simulator script as well as some additional utils (including how utility is traced and calculated)
 
 
 
