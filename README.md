@@ -5,27 +5,50 @@ This repo is a copy of ns-3.36 with changes to support INT signaling, evaluation
 # Simulator Instructions
 For basic operation of the simulator (building, configuring, etc.), refer to the ns instructions [below](#the-network-simulator-version-3).
 
+Note: it is recommended to configure the build to ignore examples unless you are planning to use them (`./ns3 configure --disable-examples`)
+
+# Requirements
+`./ns3` requires `cmake` and `g++`
+
+The R+ support also has the additional requirements:
+`protobuf-compiler libboost-all-dev`
+
 # Running R+ Outputs
 
 ## Individual simulations
 R+ simulations are run with the `single-link-v2.cc` script in the `scratch/` dir. All arguments can be seen in the code, but as an example, one may run it with:
 
-`./ns3 run rplus-sim/single-link-v2 -- --cca=ns3::TcpRemy --netfile=/path/to/config0211.cfg --samplesize=1 --whiskerfile=/path/to/results/cfg0211-200-ut-2d-sym/queue/cfg0211-intq-2d.4 --configruns=10 --intenabled=True --linkintutil=True --linkinterval=10 --delaycoef=1 --tputcoef=1 --byteswitched=False --simtime=11.0 --savewhiskerstats=False --seed=1`
+`./ns3 run rplus-sim/single-link-v2.cc -- --cca=ns3::TcpRemy --netfile=/path/to/config-default.cfg --samplesize=1 --whiskerfile=/path/to/rplus/results/cfg-default-results-dir/queue/cfg-default-intq.4 --configruns=10 --intenabled=True --linkintutil=True --linkinterval=10 --delaycoef=1 --tputcoef=1 --byteswitched=False --simtime=11.0 --savewhiskerstats=False --seed=1`
 
 ### Notes:
 - The script is usually run with `samplesize=1` so that only one (seeded) configuration is run each time. To run the same configuration multiple times, use the `configruns` parameter.
+- `intenabled` makes it so that nodes add/edit the INT header (individual signals do not need to be enabled/disabled)
 
 # Running many simulations in parallel
 To run many simulations in parallel with different parameters, you can use the [sem](https://simulationexecutionmanager.readthedocs.io/en/develop/) python package. Python scripts using this package can be found in `scripts/`. 
 
 As an example, you may run `remy-campaign-mg-mt.py` as follows:
 
-`python3 remy-campaign-mg-mt.py -c remy -t "int,intq,intl,noint" -g "0,1,2,3,4" -w cfg0211-200-ut-sym -cf config0211.cfg -s default` 
+`python3 rplus-campaign-mg-mt.py -c remy -t "int,intq,intl,noint" -g "0,1,2,3,4" -w cfg-default-results-dir -cf config-default.cfg -s optional-suffix-to-result-filenames` 
 
 This will run 200 simulations of the R+ outputs in the directory with the name with the name `cfg0211-200-ut-sym` for each selected generation (0-4) and each signal set listed with the network config `config0211.cfg` (each signal set is expected to have its own named subdirectory). 
 
 ### Notes:
-- If you are using [R+](https://github.com/smcclure20/rplus), the output should be formatted correctly to be found by this script.
+- The script expects there to be a single directory with all R+ outputs to test. Within this, there should be a subdir for each signal set that contains all generations. 
+  - Example (for the above example command):
+  ```
+    cfg-default-results-dir/
+      -- /int/
+        -- cfg-default-int.0
+        -- cfg-default-int.1
+        -- ...
+      -- /intq/
+        -- cfg-default-int.0
+        -- cfg-default-int.1
+        -- ...
+      -- ...
+  ```
+  
 - You *must* set some file paths at the top of the script for your environment.
 
 ## Main Changes
