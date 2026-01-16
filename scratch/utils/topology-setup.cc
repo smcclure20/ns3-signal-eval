@@ -134,8 +134,8 @@ void Utils::topologySetup(Topology* topo, std::string queueType, std::string rou
         Ipv4Address remoteAddr = endHostAddrs[hosts.at(matrix.at(i).at(j))->id]; // addresses are indexed by node id (counts routers) (though hosts in indexed by host order-not counting routers)
         uint16_t port = topo->getPort();
 
-        int numSenders = (int) (endHostCount);
-        std::string protocol = "ns3::TcpSocketFactory";
+        // int numSenders = (int) (endHostCount);
+        // std::string protocol = "ns3::TcpSocketFactory";
         // if (i >= numSenders) {
         //     std::stringstream nodeId;
         //     nodeId << node->GetId();
