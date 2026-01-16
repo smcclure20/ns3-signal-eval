@@ -96,7 +96,7 @@ if config == None:
 gens = gen_list.split(",")
 
 
-results_dir = results_dir + "{}-results/".format(cca)
+results_dir = results_dir # + "{}-results/".format(cca)
 file_suffix = "-{}".format(whisker_dir)
 if not(suffix is None):
     file_suffix += "-{}".format(suffix)
