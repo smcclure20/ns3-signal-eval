@@ -27,11 +27,11 @@ R+ simulations are run with the `single-link-v2.cc` script in the `scratch/` dir
 # Running many simulations in parallel
 To run many simulations in parallel with different parameters, you can use the [sem](https://simulationexecutionmanager.readthedocs.io/en/develop/) python package. Python scripts using this package can be found in `scripts/`. 
 
-As an example, you may run `remy-campaign-mg-mt.py` as follows:
+As an example, you may run `rplus-campaign-mg-mt.py` as follows:
 
 `python3 rplus-campaign-mg-mt.py -c remy -t "int,intq,intl,noint" -g "0,1,2,3,4" -w cfg-default-results-dir -cf config-default.cfg -s optional-suffix-to-result-filenames` 
 
-This will run 200 simulations of the R+ outputs in the directory with the name with the name `cfg0211-200-ut-sym` for each selected generation (0-4) and each signal set listed with the network config `config0211.cfg` (each signal set is expected to have its own named subdirectory). 
+This will run 200 simulations of the R+ outputs in the directory with the name with the name `cfg-default-results-dir ` for each selected generation (0-4) and each signal set listed with the network config `config-default.cfg` (each signal set is expected to have its own named subdirectory). 
 
 ### Notes:
 - The script expects there to be a single directory with all R+ outputs to test. Within this, there should be a subdir for each signal set that contains all generations. 
