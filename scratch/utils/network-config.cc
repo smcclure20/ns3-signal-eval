@@ -13,8 +13,8 @@ std::vector<NetworkConfig> NetworkRange::generateNetworks(ConfigRange configRang
     std::vector<NetworkConfig> configs;
     for (int i = 0; i < sample_size; i++ ) {
         double link_ppt =  _sample_range(configRange.link_ppt.low, configRange.link_ppt.high, configRange.link_ppt.incr, prng);
-        int packet_size = int_headers ? packet_size + 8 : packet_size; 
-        double link_rate = packet_size * 8 * pow(10, 6) * link_ppt; 
+        int packet_size_adj = int_headers ? packet_size + 8 : packet_size; 
+        double link_rate = packet_size_adj * 8 * pow(10, 6) * link_ppt; 
         double rtt_val =  _sample_range(configRange.rtt.low, configRange.rtt.high, configRange.rtt.incr, prng);
         int senders =  (int)_sample_range(configRange.num_senders.low, configRange.num_senders.high, configRange.num_senders.incr, prng);
         double on_mean =  _sample_range(configRange.mean_on_duration.low, configRange.mean_on_duration.high, configRange.mean_on_duration.incr, prng);
